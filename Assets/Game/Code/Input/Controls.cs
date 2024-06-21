@@ -30,26 +30,143 @@ namespace Game.Code.Input
             ""id"": ""016ff3cc-8e9b-421b-b5e8-b4e2014d5fef"",
             ""actions"": [
                 {
-                    ""name"": ""Movement"",
+                    ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""7a47702f-8e15-4206-92c9-7ec64f448805"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""cae15fa1-781d-4586-b3d5-2b7699051d0d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""ffe78599-d3b7-4fac-b138-51ad39872d65"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""55ad7696-bf7d-41d8-a7f2-fda7a6d61dcf"",
-                    ""path"": """",
+                    ""id"": ""de17bdba-8e94-4d86-9036-eae230441859"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""f4028c76-4ebe-47cf-ab75-eb8f76771192"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""508490e3-1422-4138-857c-f8e5ea0d2ac0"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""8c30dffe-c8b5-40ef-b444-cd20fe2259e6"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""a7c8d561-705c-43ef-82bd-6dc6763040f1"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""d22234e7-535c-4b68-84b3-bccb38e90bb5"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""1ef464b2-4031-4b25-9ce4-cfd476cfbfa4"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""cc566735-e96d-48ff-8447-7d2e4330c2b4"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""048670c6-331a-4bea-b2c1-62ba265a2d8d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""c7c6a7d5-3144-44f2-812e-9294b6edceb3"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -64,7 +181,9 @@ namespace Game.Code.Input
 }");
             // Tank Control
             m_TankControl = asset.FindActionMap("Tank Control", throwIfNotFound: true);
-            m_TankControl_Movement = m_TankControl.FindAction("Movement", throwIfNotFound: true);
+            m_TankControl_Move = m_TankControl.FindAction("Move", throwIfNotFound: true);
+            m_TankControl_Shoot = m_TankControl.FindAction("Shoot", throwIfNotFound: true);
+            m_TankControl_Rotate = m_TankControl.FindAction("Rotate", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -126,12 +245,16 @@ namespace Game.Code.Input
         // Tank Control
         private readonly InputActionMap m_TankControl;
         private List<ITankControlActions> m_TankControlActionsCallbackInterfaces = new List<ITankControlActions>();
-        private readonly InputAction m_TankControl_Movement;
+        private readonly InputAction m_TankControl_Move;
+        private readonly InputAction m_TankControl_Shoot;
+        private readonly InputAction m_TankControl_Rotate;
         public struct TankControlActions
         {
             private @Controls m_Wrapper;
             public TankControlActions(@Controls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Movement => m_Wrapper.m_TankControl_Movement;
+            public InputAction @Move => m_Wrapper.m_TankControl_Move;
+            public InputAction @Shoot => m_Wrapper.m_TankControl_Shoot;
+            public InputAction @Rotate => m_Wrapper.m_TankControl_Rotate;
             public InputActionMap Get() { return m_Wrapper.m_TankControl; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -141,16 +264,28 @@ namespace Game.Code.Input
             {
                 if (instance == null || m_Wrapper.m_TankControlActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_TankControlActionsCallbackInterfaces.Add(instance);
-                @Movement.started += instance.OnMovement;
-                @Movement.performed += instance.OnMovement;
-                @Movement.canceled += instance.OnMovement;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
             }
 
             private void UnregisterCallbacks(ITankControlActions instance)
             {
-                @Movement.started -= instance.OnMovement;
-                @Movement.performed -= instance.OnMovement;
-                @Movement.canceled -= instance.OnMovement;
+                @Move.started -= instance.OnMove;
+                @Move.performed -= instance.OnMove;
+                @Move.canceled -= instance.OnMove;
+                @Shoot.started -= instance.OnShoot;
+                @Shoot.performed -= instance.OnShoot;
+                @Shoot.canceled -= instance.OnShoot;
+                @Rotate.started -= instance.OnRotate;
+                @Rotate.performed -= instance.OnRotate;
+                @Rotate.canceled -= instance.OnRotate;
             }
 
             public void RemoveCallbacks(ITankControlActions instance)
@@ -179,7 +314,9 @@ namespace Game.Code.Input
         }
         public interface ITankControlActions
         {
-            void OnMovement(InputAction.CallbackContext context);
+            void OnMove(InputAction.CallbackContext context);
+            void OnShoot(InputAction.CallbackContext context);
+            void OnRotate(InputAction.CallbackContext context);
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using Game.Code.Tanks.Camera;
+﻿using Game.Code.Network;
+using Game.Code.Tanks.Camera;
+using Game.Code.Tanks.Input;
 using Game.Code.Tanks.Models;
+using Game.Code.Tanks.Movement;
 using UnityEngine;
 using Zenject;
 
@@ -9,11 +12,18 @@ namespace Game.Code.Tanks.DI
 	{
 		public bool IsOwned;
 
+		[Inject] private INetModeProvider _netModeProvider;
+
 		public override void InstallBindings()
 		{
+			Debug.Log($"Is owned {IsOwned}");
+
 			InstallCommon();
 			InstallModels();
-			InstallMovement();
+			InstallComponents();
+
+			if (_netModeProvider.NetMode.IsServer())
+				InstallServer();
 
 			if (IsOwned)
 				InstallOwned();
@@ -25,7 +35,7 @@ namespace Game.Code.Tanks.DI
 				.BindInterfacesTo<NetTankUnit>()
 				.FromComponentInHierarchy()
 				.AsSingle();
-			
+
 			Container
 				.Bind<TankUnitView>()
 				.FromComponentInHierarchy()
@@ -39,7 +49,7 @@ namespace Game.Code.Tanks.DI
 				.AsSingle();
 		}
 
-		private void InstallMovement()
+		private void InstallComponents()
 		{
 			Container
 				.Bind<Rigidbody>()
@@ -47,10 +57,21 @@ namespace Game.Code.Tanks.DI
 				.AsSingle();
 		}
 
+		private void InstallServer()
+		{
+			Container
+				.BindInterfacesTo<TankMovement>()
+				.AsSingle();
+		}
+
 		private void InstallOwned()
 		{
 			Container
-				.BindInterfacesTo<TankOwnedCameraController>()
+				.BindInterfacesTo<TankOwnedCamera>()
+				.AsSingle();
+
+			Container
+				.BindInterfacesTo<TankOwnedInput>()
 				.AsSingle();
 		}
 	}

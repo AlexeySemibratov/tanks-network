@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-
-namespace Game.Code.Tanks
+﻿namespace Game.Code.Tanks
 {
 	public interface INetTankUnit
 	{
 		void CmdShoot();
 
-		void CmdSetVerticalInput(Vector2 dir);
+		void CmdMoveAxisInput(float value);
+		void CmdRotateAxisInput(float value);
 	}
 }

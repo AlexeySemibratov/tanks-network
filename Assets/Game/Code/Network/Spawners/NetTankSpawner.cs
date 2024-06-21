@@ -33,7 +33,12 @@ namespace Game.Code.Network.Spawners
 		public NetTankUnit ServerSpawn(NetworkConnectionToClient conn)
 		{
 			int id = conn.connectionId;
-			TankFactory.Args args = new TankFactory.Args();
+			
+			TankFactory.Args args = new TankFactory.Args
+			{
+				IsOwned = conn is LocalConnectionToClient
+			};
+			
 			NetTankUnit tank = _tankFactory.Create(args);
 			Setup(tank, id);
 

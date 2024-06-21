@@ -1,4 +1,5 @@
 ﻿using Game.Code.Data.Providers;
+using Game.Code.Tanks.DI;
 using UnityEngine;
 using Zenject;
 
@@ -12,12 +13,18 @@ namespace Game.Code.Tanks.Factory
 		}
 
 		[Inject] private IGameDataProvider _gameData;
+		[Inject] private DiContainer _diContainer;
 
 		public NetTankUnit Create(Args args)
 		{
 			NetTankUnit prefab = _gameData.GameConfig.TankUnitPrefab;
 			NetTankUnit instance = Object.Instantiate(prefab);
-
+			
+			TankUnitInstaller installer = instance.GetComponent<TankUnitInstaller>();
+			installer.IsOwned = args.IsOwned;
+			
+			_diContainer.InjectGameObject(instance.gameObject);
+			
 			return instance;
 		}
 		
