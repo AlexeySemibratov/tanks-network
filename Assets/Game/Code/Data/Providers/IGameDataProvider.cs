@@ -4,6 +4,7 @@ namespace Game.Code.Data.Providers
 {
 	public interface IGameDataProvider
 	{
-		GameConfig GameConfig { get; }
+		GamePrefabsConfig GamePrefabsConfig { get; }
+		TankConfig TankConfig { get; }
 	}
 }

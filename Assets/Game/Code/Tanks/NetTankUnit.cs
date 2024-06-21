@@ -8,6 +8,22 @@ namespace Game.Code.Tanks
 	public class NetTankUnit : NetworkBehaviour, INetTankUnit
 	{
 		[Inject] private TankMovementModel _movementModel;
+
+		[SyncVar(hook = nameof(OnVelocityChanged))] 
+		private Vector3 _velocity;
+
+		public void ServerSetVelocity(Vector3 velocity)
+		{
+			_movementModel.Velocity = velocity;
+			_velocity = velocity;
+		}
+
+		private void OnVelocityChanged(Vector3 _, Vector3 value)
+		{
+			_movementModel.Velocity = value;
+		}
+
+		#region Commands
 		
 		public void CmdShoot()
 		{
@@ -25,5 +41,7 @@ namespace Game.Code.Tanks
 		{
 			_movementModel.RotateInputValue = value;
 		}
+		
+		#endregion
 	}
 }

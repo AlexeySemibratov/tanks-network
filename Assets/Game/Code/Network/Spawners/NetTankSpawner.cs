@@ -15,8 +15,8 @@ namespace Game.Code.Network.Spawners
 		[Inject] private INetModeProvider _netModeProvider;
 		[Inject] private ITankFactory _tankFactory;
 
-		private GameConfig GameConfig => _gameDataProvider.GameConfig;
-		private NetTankUnit TankUnitPrefab => _gameDataProvider.GameConfig.TankUnitPrefab;
+		private GamePrefabsConfig GamePrefabsConfig => _gameDataProvider.GamePrefabsConfig;
+		private NetTankUnit TankUnitPrefab => _gameDataProvider.GamePrefabsConfig.TankUnitPrefab;
 
 		private Dictionary<int, NetTankUnit> _spawnedTanks = new();
 

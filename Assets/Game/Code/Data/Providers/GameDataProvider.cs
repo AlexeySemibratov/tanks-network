@@ -5,7 +5,8 @@ namespace Game.Code.Data.Providers
 {
 	public class GameDataProvider : IGameDataProvider
 	{
-		public GameConfig GameConfig => _globalConfig.GameConfig;
+		public GamePrefabsConfig GamePrefabsConfig => _globalConfig.GamePrefabsConfig;
+		public TankConfig TankConfig => _globalConfig.TankConfig;
 
 		[Inject] private GlobalConfig _globalConfig;
 	}

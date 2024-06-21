@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e5fb4c42ef6492f8742adeca0820779, type: 3}
-  m_Name: Global Config
+  m_Script: {fileID: 11500000, guid: 277e242f3d5a44d5a49d360233f171f2, type: 3}
+  m_Name: Tank Config
   m_EditorClassIdentifier: 
-  GamePrefabsConfig: {fileID: 11400000, guid: 2e750f9119fc265409f049d36264052a, type: 2}
-  TankConfig: {fileID: 11400000, guid: 10ee88901cd836b4ea1b5640a1dab2ae, type: 2}
+  EngineForce: 10000
+  MaxForwardSpeed: 8
+  MaxBackSpeed: 2
+  RotationSpeed: 50

@@ -17,7 +17,7 @@ namespace Game.Code.Tanks.Factory
 
 		public NetTankUnit Create(Args args)
 		{
-			NetTankUnit prefab = _gameData.GameConfig.TankUnitPrefab;
+			NetTankUnit prefab = _gameData.GamePrefabsConfig.TankUnitPrefab;
 			NetTankUnit instance = Object.Instantiate(prefab);
 			
 			TankUnitInstaller installer = instance.GetComponent<TankUnitInstaller>();

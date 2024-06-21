@@ -1,4 +1,6 @@
-﻿using Game.Code.Network;
+﻿using Game.Code.Data.Configs;
+using Game.Code.Data.Providers;
+using Game.Code.Network;
 using Game.Code.Tanks.Camera;
 using Game.Code.Tanks.Input;
 using Game.Code.Tanks.Models;
@@ -10,10 +12,11 @@ namespace Game.Code.Tanks.DI
 {
 	public class TankUnitInstaller : MonoInstaller
 	{
-		public bool IsOwned;
+		public bool IsOwned { get; set; }
 
 		[Inject] private INetModeProvider _netModeProvider;
-
+		[Inject] private IGameDataProvider _gameDataProvider;
+		
 		public override void InstallBindings()
 		{
 			Debug.Log($"Is owned {IsOwned}");
@@ -40,6 +43,10 @@ namespace Game.Code.Tanks.DI
 				.Bind<TankUnitView>()
 				.FromComponentInHierarchy()
 				.AsSingle();
+
+			Container
+				.Bind<TankConfig>()
+				.FromInstance(_gameDataProvider.TankConfig);
 		}
 
 		private void InstallModels()
