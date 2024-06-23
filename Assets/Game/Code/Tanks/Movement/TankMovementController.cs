@@ -80,8 +80,6 @@ namespace Game.Code.Tanks.Movement
 				_ => Mathf.Infinity
 			};
 			
-			Debug.Log($"{currVelocity}/{maxVelocity}");
-
 			return currVelocity > maxVelocity;
 		}
 
