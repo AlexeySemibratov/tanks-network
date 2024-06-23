@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Code.Data.Configs;
+﻿using Game.Code.Data.Configs;
 using Game.Code.Tanks.Models;
 using UnityEngine;
 using Zenject;
@@ -25,16 +24,20 @@ namespace Game.Code.Tanks.Movement
 
 		private void UpdateModel()
 		{
-			_netTankUnit.ServerSetVelocity(_rigidbody.velocity);
+			var velocity = _rigidbody.velocity;
+			
+			_netTankUnit.ServerSetVelocity(velocity);
 
-			if (
-				_inputModel.MoveInputValue < 0 &&
-				_tankView.transform.InverseTransformDirection(_rigidbody.velocity).z < 1
-			)
+			if (IsMovingBackward(velocity))
 				_netTankUnit.ServerSetMoveDirection(EMoveDirection.Backward);
 			else
 				_netTankUnit.ServerSetMoveDirection(EMoveDirection.Forward);
 		}
+
+		private bool IsMovingBackward(Vector3 rigidbodyVelocity)
+			=>
+				_inputModel.MoveInputValue < 0 &&
+				_tankView.transform.InverseTransformDirection(rigidbodyVelocity).z < 1;
 
 		private void Move()
 		{
