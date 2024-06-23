@@ -19,8 +19,6 @@ namespace Game.Code.Tanks.DI
 		
 		public override void InstallBindings()
 		{
-			Debug.Log($"Is owned {IsOwned}");
-
 			InstallCommon();
 			InstallModels();
 			InstallComponents();

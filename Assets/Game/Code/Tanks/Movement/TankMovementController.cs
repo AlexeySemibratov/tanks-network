@@ -1,4 +1,5 @@
-﻿using Game.Code.Data.Configs;
+﻿using System;
+using Game.Code.Data.Configs;
 using Game.Code.Tanks.Models;
 using UnityEngine;
 using Zenject;
@@ -25,11 +26,14 @@ namespace Game.Code.Tanks.Movement
 		private void UpdateModel()
 		{
 			_netTankUnit.ServerSetVelocity(_rigidbody.velocity);
-			
-			if (_inputModel.MoveInputValue < 0 && _tankView.transform.InverseTransformDirection(_rigidbody.velocity).z < 1)
-				_movementModel.MoveDirection = -1;
+
+			if (
+				_inputModel.MoveInputValue < 0 &&
+				_tankView.transform.InverseTransformDirection(_rigidbody.velocity).z < 1
+			)
+				_netTankUnit.ServerSetMoveDirection(EMoveDirection.Backward);
 			else
-				_movementModel.MoveDirection = 1;
+				_netTankUnit.ServerSetMoveDirection(EMoveDirection.Forward);
 		}
 
 		private void Move()
@@ -41,21 +45,45 @@ namespace Game.Code.Tanks.Movement
 		private void MoveWheels(TankWheel[] wheels, bool isLeftWheels)
 		{
 			float dirSign = isLeftWheels ? 1f : -1f;
-			float brakeTorque = _tankConfig.EngineBreakTorque * GetBrakeDirValue();
+			float brakeTorque = _tankConfig.EngineBreakTorque * _inputModel.BrakeInputValue;
+			bool isSpeedLimitReached = IsVelocityLimitReached();
+
+			if (_movementModel.MoveDirection == EMoveDirection.Backward)
+				dirSign *= -1;
 			
 			foreach (var wheel in wheels)
 			{
-				float dir = Mathf.Clamp(_inputModel.MoveInputValue + dirSign * _inputModel.RotateInputValue, -1f, 1f);
-				float torque = dir * _tankConfig.EngineGasTorque;
-				
-				if (CanMoveWheel(wheel))
+				if (!isSpeedLimitReached && wheel.IsGrounded)
+				{
+					float torqueDir = Mathf.Clamp(_inputModel.MoveInputValue + dirSign * _inputModel.RotateInputValue, -1f, 1f);
+					float torque = torqueDir * _tankConfig.EngineGasTorque;
+					
 					wheel.SetMotorTorque(torque);
+				}
+				else
+				{
+					wheel.SetMotorTorque(0);
+				}
 
 				wheel.SetBrakeTorque(brakeTorque);
 			}
 		}
 
-		private float GetBrakeDirValue() => _inputModel.BrakePressed ? 1 : 0;
+		private bool IsVelocityLimitReached()
+		{
+			var currVelocity = _movementModel.VelocityMagnitude.Value;
+
+			var maxVelocity = _movementModel.MoveDirection switch
+			{
+				EMoveDirection.Forward => _tankConfig.MaxForwardSpeed,
+				EMoveDirection.Backward => _tankConfig.MaxBackwardSpeed,
+				_ => Mathf.Infinity
+			};
+			
+			Debug.Log($"{currVelocity}/{maxVelocity}");
+
+			return currVelocity > maxVelocity;
+		}
 
 		private void Rotate()
 		{
@@ -65,13 +93,6 @@ namespace Game.Code.Tanks.Movement
 				
 				_rigidbody.AddRelativeTorque(torque);
 			}
-		}
-
-		bool CanMoveWheel(TankWheel wheel)
-		{
-			var maxSpeed = _tankConfig.MaxForwardSpeed;
-
-			return _movementModel.Velocity.magnitude < maxSpeed && wheel.IsGrounded;
 		}
 	}
 }

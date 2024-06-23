@@ -1,8 +1,10 @@
 ﻿using Cinemachine;
+using Game.Code.Infrastructure.UI.DI;
 using Game.Code.Input;
 using Game.Code.Network;
 using Game.Code.Network.Spawners;
 using Game.Code.Tanks.Factory;
+using Game.Code.UI.HUD;
 using UnityEngine;
 using Zenject;
 
@@ -39,15 +41,17 @@ namespace Game.Code.Infrastructure.Scenes
 		{
 			InstallInput();
 			InstallCameras();
+			InstallUI();
+			InstallClientNetwork();
 		}
-		
+
 		private void InstallInput()
 		{
 			Container
 				.BindInterfacesTo<PlayerInput>()
 				.AsSingle();
 		}
-		
+
 		private void InstallCameras()
 		{
 			Container
@@ -58,6 +62,19 @@ namespace Game.Code.Infrastructure.Scenes
 			Container
 				.Bind<Camera>()
 				.FromComponentInHierarchy()
+				.AsSingle();
+		}
+
+		private void InstallUI()
+		{
+			Container.BindView<UIGameHudView>();
+			Container.BindPresenter<UIGameHudPresenter>();
+		}
+
+		private void InstallClientNetwork()
+		{
+			Container
+				.Bind<OwnedNetObjects>()
 				.AsSingle();
 		}
 	}

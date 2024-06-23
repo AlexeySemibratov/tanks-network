@@ -1,5 +1,4 @@
 ﻿using Cinemachine;
-using UnityEngine;
 using Zenject;
 
 namespace Game.Code.Tanks.Camera
@@ -12,7 +11,6 @@ namespace Game.Code.Tanks.Camera
 		
 		public void Initialize()
 		{
-			Debug.Log($"Init tank unit {_netTankUnit.Id}");
 			var transform = _tankView.transform;
 			
 			_cinemachineCamera.Follow = transform;

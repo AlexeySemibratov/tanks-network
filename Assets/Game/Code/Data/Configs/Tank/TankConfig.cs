@@ -11,8 +11,6 @@ namespace Game.Code.Data.Configs
 		public float EngineBreakTorque;
 		
 		public float MaxForwardSpeed;
-		public float MaxBackSpeed;
-		
-		public float RotationSpeed;
+		public float MaxBackwardSpeed;
 	}
 }

@@ -16,5 +16,4 @@ MonoBehaviour:
   EngineRotationTorque: 2800
   EngineBreakTorque: 800
   MaxForwardSpeed: 8
-  MaxBackSpeed: 2
-  RotationSpeed: 50
+  MaxBackwardSpeed: 2

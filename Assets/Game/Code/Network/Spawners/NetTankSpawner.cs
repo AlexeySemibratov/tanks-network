@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Code.Data.Configs;
 using Game.Code.Data.Providers;
 using Game.Code.Tanks;
 using Game.Code.Tanks.Factory;
@@ -14,8 +13,10 @@ namespace Game.Code.Network.Spawners
 		[Inject] private IGameDataProvider _gameDataProvider;
 		[Inject] private INetModeProvider _netModeProvider;
 		[Inject] private ITankFactory _tankFactory;
+		
+		// Client/Host only
+		[InjectOptional] private OwnedNetObjects _ownedNetObjects;
 
-		private GamePrefabsConfig GamePrefabsConfig => _gameDataProvider.GamePrefabsConfig;
 		private NetTankUnit TankUnitPrefab => _gameDataProvider.GamePrefabsConfig.TankUnitPrefab;
 
 		private Dictionary<int, NetTankUnit> _spawnedTanks = new();
@@ -30,14 +31,16 @@ namespace Game.Code.Network.Spawners
 
 		#region Server
 
+
 		public NetTankUnit ServerSpawn(NetworkConnectionToClient conn)
 		{
 			int id = conn.connectionId;
+			bool isOwned = conn is LocalConnectionToClient;
 			
 			TankFactory.Args args = new TankFactory.Args
 			{
 				ServerId = id,
-				IsOwned = conn is LocalConnectionToClient,
+				IsOwned = isOwned,
 				
 				Position = Vector3.up * 2,
 				Rotation = Quaternion.identity
@@ -46,6 +49,8 @@ namespace Game.Code.Network.Spawners
 			NetTankUnit tank = _tankFactory.Create(args);
 
 			_spawnedTanks[id] = tank;
+			
+			SetOwnedTank(tank, isOwned);
 
 			return tank;
 		}
@@ -77,6 +82,8 @@ namespace Game.Code.Network.Spawners
 			
 			NetTankUnit tank = _tankFactory.Create(args);
 
+			SetOwnedTank(tank, msg.isLocalPlayer);
+
 			return tank.gameObject;
 		}
 
@@ -86,5 +93,11 @@ namespace Game.Code.Network.Spawners
 		}
 
 		#endregion
+
+		private void SetOwnedTank(NetTankUnit tank, bool isOwned)
+		{
+			if (isOwned)
+				_ownedNetObjects.NetTankUnit.Value = tank;
+		}
 	}
 }

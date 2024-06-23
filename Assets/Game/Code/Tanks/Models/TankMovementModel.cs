@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using UniRx;
+using UnityEngine;
 
 namespace Game.Code.Tanks.Models
 {
 	public class TankMovementModel
 	{
-		public Vector3 Velocity { get; set; } = Vector3.zero;
-		public int MoveDirection { get; set; }
+		public readonly ReactiveProperty<Vector3> Velocity = new(Vector3.zero);
+		public readonly FloatReactiveProperty VelocityMagnitude = new();
+		
+		public EMoveDirection MoveDirection { get; set; } = EMoveDirection.None;
 	}
 }
