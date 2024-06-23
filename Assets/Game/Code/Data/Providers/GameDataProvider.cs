@@ -7,6 +7,7 @@ namespace Game.Code.Data.Providers
 	{
 		public GamePrefabsConfig GamePrefabsConfig => _globalConfig.GamePrefabsConfig;
 		public TankConfig TankConfig => _globalConfig.TankConfig;
+		public ScenesConfig ScenesConfig => _globalConfig.ScenesConfig;
 
 		[Inject] private GlobalConfig _globalConfig;
 	}

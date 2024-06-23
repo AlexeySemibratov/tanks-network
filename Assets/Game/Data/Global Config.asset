@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Global Config
   m_EditorClassIdentifier: 
   GamePrefabsConfig: {fileID: 11400000, guid: 2e750f9119fc265409f049d36264052a, type: 2}
+  ScenesConfig: {fileID: 11400000, guid: 070164a830abcc248b40039a5b2d79e1, type: 2}
   TankConfig: {fileID: 11400000, guid: 10ee88901cd836b4ea1b5640a1dab2ae, type: 2}

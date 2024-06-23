@@ -6,9 +6,9 @@ using Game.Code.Tanks.Factory;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Code.DI
+namespace Game.Code.Infrastructure.Scenes
 {
-	public class MainSceneInstaller : MonoInstaller
+	public class GameplaySceneInstaller : MonoInstaller
 	{
 		[Inject] private INetModeProvider _netModeProvider;
 		

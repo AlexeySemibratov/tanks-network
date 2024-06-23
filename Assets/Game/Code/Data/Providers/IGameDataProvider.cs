@@ -6,5 +6,6 @@ namespace Game.Code.Data.Providers
 	{
 		GamePrefabsConfig GamePrefabsConfig { get; }
 		TankConfig TankConfig { get; }
+		ScenesConfig ScenesConfig { get; }
 	}
 }

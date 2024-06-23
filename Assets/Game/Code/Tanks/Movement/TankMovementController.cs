@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Game.Code.Tanks.Movement
 {
-	public class TankMovement : IFixedTickable
+	public class TankMovementController : IFixedTickable
 	{
 		[Inject] private TankUnitView _tankView;
 		[Inject] private INetTankUnit _netTankUnit;
@@ -17,8 +17,6 @@ namespace Game.Code.Tanks.Movement
 		public void FixedTick()
 		{
 			Transform transform = _tankView.transform;
-			
-			Debug.Log($"Velocity {_rigidbody.velocity.magnitude}");
 			
 			_netTankUnit.ServerSetVelocity(_rigidbody.velocity);
 			

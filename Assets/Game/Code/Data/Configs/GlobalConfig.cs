@@ -6,6 +6,7 @@ namespace Game.Code.Data.Configs
 	public class GlobalConfig : ScriptableObject
 	{
 		public GamePrefabsConfig GamePrefabsConfig;
+		public ScenesConfig ScenesConfig;
 		public TankConfig TankConfig;
 	}
 }

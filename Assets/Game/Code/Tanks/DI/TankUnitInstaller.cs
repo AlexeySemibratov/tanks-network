@@ -67,7 +67,7 @@ namespace Game.Code.Tanks.DI
 		private void InstallServer()
 		{
 			Container
-				.BindInterfacesTo<TankMovement>()
+				.BindInterfacesTo<TankMovementController>()
 				.AsSingle();
 		}
 

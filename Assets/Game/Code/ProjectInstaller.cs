@@ -1,5 +1,7 @@
 ﻿using Game.Code.Data.Configs;
 using Game.Code.Data.Providers;
+using Game.Code.Infrastructure.Coroutines;
+using Game.Code.Infrastructure.Scenes;
 using Game.Code.Network;
 using UnityEngine;
 using Zenject;
@@ -19,6 +21,15 @@ namespace Game.Code
 
 			Container
 				.BindInterfacesTo<NetModeProvider>()
+				.AsSingle();
+
+			Container
+				.BindInterfacesTo<SceneLoader>()
+				.AsSingle();
+
+			Container
+				.BindInterfacesTo<CoroutineContext>()
+				.FromNewComponentOnNewGameObject()
 				.AsSingle();
 		}
 	}

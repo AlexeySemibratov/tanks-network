@@ -1,13 +1,13 @@
-﻿using Game.Code.Extensions;
+﻿using System;
+using Game.Code.Extensions;
 using Game.Code.Input;
 using UniRx;
-using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
 namespace Game.Code.Tanks.Input
 {
-	public class TankOwnedInput : IInitializable
+	public class TankOwnedInput : IInitializable, IDisposable
 	{
 		[Inject] private IPlayerInput _playerInput;
 		[Inject] private INetTankUnit _netTankUnit;
@@ -15,26 +15,15 @@ namespace Game.Code.Tanks.Input
 		private CompositeDisposable _disposables = new();
 
 		public void Initialize()
-		{
-			HandleTankControlActions(_playerInput.TankControls);
-		}
+			=> HandleTankControlActions(_playerInput.TankControls);
 
-		void HandleTankControlActions(Controls.TankControlActions actions)
+		public void Dispose()
+			=> _disposables.Dispose();
+
+		private void HandleTankControlActions(Controls.TankControlActions actions)
 		{
 			HandleInputAxis(actions.Move, true);
 			HandleInputAxis(actions.Rotate, false);
-			
-			// actions.Move
-			// 	.PerformedAsObservable()
-			// 	.Subscribe(context =>
-			// 	{
-			// 		float value = context.ReadValue<float>();
-			//
-			// 		Debug.Log($"Move input {value}");
-			// 		
-			// 		_netTankUnit.CmdMoveAxisInput(value);
-			// 	})
-			// 	.AddTo(_disposables);
 
 			actions.Shoot
 				.PerformedAsObservable()

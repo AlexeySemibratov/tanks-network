@@ -32,7 +32,7 @@ namespace Game.Code.Network
 		{
 			NetTankUnit tank = _netTankSpawner.ServerSpawn(conn);
 			
-			NetworkServer.AddPlayerForConnection( conn, tank.gameObject );
+			NetworkServer.AddPlayerForConnection(conn, tank.gameObject);
 		}
 
 		public override void OnServerDisconnect(NetworkConnectionToClient conn)
