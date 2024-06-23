@@ -7,6 +7,7 @@ namespace Game.Code.Tanks
 	{
 		[field:SerializeField] public TankWheel[] WheelsL { get; private set; }
 		[field:SerializeField] public TankWheel[] WheelsR { get; private set; }
+
 		
 		[field:SerializeField] public TankWheel MiddleWheelL { get; private set; }
 		[field:SerializeField] public TankWheel MiddleWheelR { get; private set; }

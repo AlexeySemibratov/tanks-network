@@ -38,7 +38,7 @@ namespace Game.Code.Tanks.DI
 				.AsSingle();
 
 			Container
-				.Bind<TankUnitView>()
+				.BindInterfacesAndSelfTo<TankUnitView>()
 				.FromComponentInHierarchy()
 				.AsSingle();
 
