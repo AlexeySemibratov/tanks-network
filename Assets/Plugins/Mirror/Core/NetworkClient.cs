@@ -1121,7 +1121,7 @@ namespace Mirror
         }
 
         // spawning ////////////////////////////////////////////////////////////
-        internal static void ApplySpawnPayload(NetworkIdentity identity, SpawnMessage message)
+        public static void ApplySpawnPayload(NetworkIdentity identity, SpawnMessage message)
         {
             if (message.assetId != 0)
                 identity.assetId = message.assetId;

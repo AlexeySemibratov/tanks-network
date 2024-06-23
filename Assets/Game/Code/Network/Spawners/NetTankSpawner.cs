@@ -25,7 +25,7 @@ namespace Game.Code.Network.Spawners
 			if (_netModeProvider.NetMode != ENetMode.Client)
 				return;
 
-			NetworkClient.RegisterSpawnHandler(TankUnitPrefab.netId, ClientSpawn, ClientUnspawn);
+			NetworkClient.RegisterSpawnHandler(TankUnitPrefab.AssetNetIdentity.assetId, ClientSpawn, ClientUnspawn);
 		}
 
 		#region Server
@@ -36,11 +36,14 @@ namespace Game.Code.Network.Spawners
 			
 			TankFactory.Args args = new TankFactory.Args
 			{
-				IsOwned = conn is LocalConnectionToClient
+				ServerId = id,
+				IsOwned = conn is LocalConnectionToClient,
+				
+				Position = Vector3.zero,
+				Rotation = Quaternion.identity
 			};
 			
 			NetTankUnit tank = _tankFactory.Create(args);
-			Setup(tank, id);
 
 			_spawnedTanks[id] = tank;
 
@@ -64,19 +67,24 @@ namespace Game.Code.Network.Spawners
 
 		private GameObject ClientSpawn(SpawnMessage msg)
 		{
-			throw new System.NotImplementedException();
+			TankFactory.Args args = new TankFactory.Args
+			{
+				IsOwned = msg.isLocalPlayer,
+				
+				Position = msg.position,
+				Rotation = msg.rotation
+			};
+			
+			NetTankUnit tank = _tankFactory.Create(args);
+
+			return tank.gameObject;
 		}
 
 		private void ClientUnspawn(GameObject spawned)
 		{
-			throw new System.NotImplementedException();
+			Object.Destroy(spawned);
 		}
 
 		#endregion
-
-		private void Setup(NetTankUnit tank, int id)
-		{
-			tank.gameObject.name = $"Tank ({id})";
-		}
 	}
 }

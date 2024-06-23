@@ -7,8 +7,25 @@ namespace Game.Code.Tanks
 {
 	public class NetTankUnit : NetworkBehaviour, INetTankUnit
 	{
+		[field:SerializeField] public NetworkIdentity AssetNetIdentity { get; private set; }
+
+		public int Id => _id;
+		
 		[Inject] private TankMovementModel _movementModel;
 
+		#region Initialization
+
+		[SyncVar] 
+		private int _id;
+		
+		public void ServerInit(int id)
+		{
+			_id = id;
+		}
+
+		#endregion
+		
+		
 		[SyncVar(hook = nameof(OnVelocityChanged))] 
 		private Vector3 _velocity;
 
@@ -25,6 +42,7 @@ namespace Game.Code.Tanks
 
 		#region Commands
 		
+		[Command]
 		public void CmdShoot()
 		{
 			Debug.Log("Fire!");
