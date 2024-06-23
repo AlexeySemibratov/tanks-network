@@ -9,7 +9,7 @@ namespace Game.Code.Tanks
 		void ServerInit(int id);
 		void ServerSetVelocity(Vector3 velocity);
 		
-		void CmdShoot();
+		void CmdSetBrakeInput(bool pressed);
 		void CmdMoveAxisInput(float value);
 		void CmdRotateAxisInput(float value);
 	}

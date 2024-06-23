@@ -54,6 +54,10 @@ namespace Game.Code.Tanks.DI
 			Container
 				.Bind<TankMovementModel>()
 				.AsSingle();
+			
+			Container
+				.Bind<TankInputModel>()
+				.AsSingle();
 		}
 
 		private void InstallComponents()

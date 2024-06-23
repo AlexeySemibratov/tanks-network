@@ -10,8 +10,9 @@ namespace Game.Code.Tanks
 		[field:SerializeField] public NetworkIdentity AssetNetIdentity { get; private set; }
 
 		public int Id => _id;
-		
+
 		[Inject] private TankMovementModel _movementModel;
+		[Inject] private TankInputModel _inputModel;
 
 		#region Initialization
 
@@ -43,21 +44,21 @@ namespace Game.Code.Tanks
 		#region Commands
 		
 		[Command]
-		public void CmdShoot()
+		public void CmdSetBrakeInput(bool pressed)
 		{
-			Debug.Log("Fire!");
+			_inputModel.BrakePressed = pressed;
 		}
 
 		[Command]
 		public void CmdMoveAxisInput(float value)
 		{
-			_movementModel.MoveInputValue = value;
+			_inputModel.MoveInputValue = value;
 		}
 
 		[Command]
 		public void CmdRotateAxisInput(float value)
 		{
-			_movementModel.RotateInputValue = value;
+			_inputModel.RotateInputValue = value;
 		}
 		
 		#endregion

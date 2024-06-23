@@ -11,49 +11,67 @@ namespace Game.Code.Tanks.Movement
 		[Inject] private INetTankUnit _netTankUnit;
 		[Inject] private Rigidbody _rigidbody;
 		[Inject] private TankMovementModel _movementModel;
+		[Inject] private TankInputModel _inputModel;
 		[Inject] private TankConfig _tankConfig;
 
 		
 		public void FixedTick()
 		{
-			Transform transform = _tankView.transform;
-			
+			UpdateModel();
+			Move();
+			Rotate();
+		}
+
+		private void UpdateModel()
+		{
 			_netTankUnit.ServerSetVelocity(_rigidbody.velocity);
 			
-			Move(transform);
-			Rotate(transform);
+			if (_inputModel.MoveInputValue < 0 && _tankView.transform.InverseTransformDirection(_rigidbody.velocity).z < 1)
+				_movementModel.MoveDirection = -1;
+			else
+				_movementModel.MoveDirection = 1;
 		}
 
-		private void Move(Transform transform)
+		private void Move()
 		{
-			if (!IsMovementAllowed())
-				return;
-			
-			Vector3 force = transform.forward * _movementModel.MoveInputValue * _tankConfig.EngineForce;
-
-			_rigidbody.AddForce(force);
+			MoveWheels(_tankView.WheelsL, true);
+			MoveWheels(_tankView.WheelsR, false);
 		}
 
-		private void Rotate(Transform transform)
+		private void MoveWheels(TankWheel[] wheels, bool isLeftWheels)
 		{
-			Quaternion rotation = transform.rotation;
+			float dirSign = isLeftWheels ? 1f : -1f;
+			float brakeTorque = _tankConfig.EngineBreakTorque * GetBrakeDirValue();
 			
-			float angleDelta = _movementModel.RotateInputValue * _tankConfig.RotationSpeed * Time.deltaTime;
-			Quaternion rotationDelta = Quaternion.Euler(0, angleDelta, 0);
-			
-			_rigidbody.MoveRotation(rotation * rotationDelta);
+			foreach (var wheel in wheels)
+			{
+				float dir = Mathf.Clamp(_inputModel.MoveInputValue + dirSign * _inputModel.RotateInputValue, -1f, 1f);
+				float torque = dir * _tankConfig.EngineGasTorque;
+				
+				if (CanMoveWheel(wheel))
+					wheel.SetMotorTorque(torque);
+
+				wheel.SetBrakeTorque(brakeTorque);
+			}
 		}
 
-		bool IsMovementAllowed()
+		private float GetBrakeDirValue() => _inputModel.BrakePressed ? 1 : 0;
+
+		private void Rotate()
+		{
+			if(_tankView.MiddleWheelL.IsGrounded || _tankView.MiddleWheelR.IsGrounded)
+			{
+				Vector3 torque = Vector3.up * _inputModel.RotateInputValue * _tankConfig.EngineRotationTorque;
+				
+				_rigidbody.AddRelativeTorque(torque);
+			}
+		}
+
+		bool CanMoveWheel(TankWheel wheel)
 		{
 			var maxSpeed = _tankConfig.MaxForwardSpeed;
-			
-			if (_movementModel.Velocity.magnitude > maxSpeed)
-				return false;
 
-			// TODO: Also check ground and rotation
-			
-			return true;
+			return _movementModel.Velocity.magnitude < maxSpeed && wheel.IsGrounded;
 		}
 	}
 }

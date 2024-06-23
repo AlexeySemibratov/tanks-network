@@ -39,7 +39,7 @@ namespace Game.Code.Network.Spawners
 				ServerId = id,
 				IsOwned = conn is LocalConnectionToClient,
 				
-				Position = Vector3.zero,
+				Position = Vector3.up * 2,
 				Rotation = Quaternion.identity
 			};
 			

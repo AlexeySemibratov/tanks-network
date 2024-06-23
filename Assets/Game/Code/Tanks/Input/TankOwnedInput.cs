@@ -25,9 +25,9 @@ namespace Game.Code.Tanks.Input
 			HandleInputAxis(actions.Move, true);
 			HandleInputAxis(actions.Rotate, false);
 
-			actions.Shoot
-				.PerformedAsObservable()
-				.Subscribe(_ => _netTankUnit.CmdShoot())
+			actions.Brake
+				.PerformedAsButton()
+				.Subscribe(pressed => _netTankUnit.CmdSetBrakeInput(pressed))
 				.AddTo(_disposables);
 		}
 
@@ -43,8 +43,6 @@ namespace Game.Code.Tanks.Input
 				)
 				.Subscribe(value =>
 				{
-					// Debug.Log($"Move input {value}");
-
 					if (isMoveAxis)
 						_netTankUnit.CmdMoveAxisInput(value);
 					else

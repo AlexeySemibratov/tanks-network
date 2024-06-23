@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277e242f3d5a44d5a49d360233f171f2, type: 3}
   m_Name: Tank Config
   m_EditorClassIdentifier: 
-  EngineForce: 10000
+  EngineGasTorque: 800
+  EngineRotationTorque: 2800
+  EngineBreakTorque: 800
   MaxForwardSpeed: 8
   MaxBackSpeed: 2
   RotationSpeed: 50

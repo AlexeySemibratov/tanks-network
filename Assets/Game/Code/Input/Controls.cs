@@ -39,15 +39,6 @@ namespace Game.Code.Input
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Shoot"",
-                    ""type"": ""Button"",
-                    ""id"": ""cae15fa1-781d-4586-b3d5-2b7699051d0d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Rotate"",
                     ""type"": ""Value"",
                     ""id"": ""ffe78599-d3b7-4fac-b138-51ad39872d65"",
@@ -55,20 +46,18 @@ namespace Game.Code.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Brake"",
+                    ""type"": ""Button"",
+                    ""id"": ""a73c6e1c-246f-46c9-8225-b57392909f28"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""de17bdba-8e94-4d86-9036-eae230441859"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Shoot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""1D Axis"",
                     ""id"": ""f4028c76-4ebe-47cf-ab75-eb8f76771192"",
@@ -167,6 +156,17 @@ namespace Game.Code.Input
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9531c1a9-a76b-4b32-8094-bc0243c60f06"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Brake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -182,8 +182,8 @@ namespace Game.Code.Input
             // Tank Control
             m_TankControl = asset.FindActionMap("Tank Control", throwIfNotFound: true);
             m_TankControl_Move = m_TankControl.FindAction("Move", throwIfNotFound: true);
-            m_TankControl_Shoot = m_TankControl.FindAction("Shoot", throwIfNotFound: true);
             m_TankControl_Rotate = m_TankControl.FindAction("Rotate", throwIfNotFound: true);
+            m_TankControl_Brake = m_TankControl.FindAction("Brake", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -246,15 +246,15 @@ namespace Game.Code.Input
         private readonly InputActionMap m_TankControl;
         private List<ITankControlActions> m_TankControlActionsCallbackInterfaces = new List<ITankControlActions>();
         private readonly InputAction m_TankControl_Move;
-        private readonly InputAction m_TankControl_Shoot;
         private readonly InputAction m_TankControl_Rotate;
+        private readonly InputAction m_TankControl_Brake;
         public struct TankControlActions
         {
             private @Controls m_Wrapper;
             public TankControlActions(@Controls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_TankControl_Move;
-            public InputAction @Shoot => m_Wrapper.m_TankControl_Shoot;
             public InputAction @Rotate => m_Wrapper.m_TankControl_Rotate;
+            public InputAction @Brake => m_Wrapper.m_TankControl_Brake;
             public InputActionMap Get() { return m_Wrapper.m_TankControl; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -267,12 +267,12 @@ namespace Game.Code.Input
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Shoot.started += instance.OnShoot;
-                @Shoot.performed += instance.OnShoot;
-                @Shoot.canceled += instance.OnShoot;
                 @Rotate.started += instance.OnRotate;
                 @Rotate.performed += instance.OnRotate;
                 @Rotate.canceled += instance.OnRotate;
+                @Brake.started += instance.OnBrake;
+                @Brake.performed += instance.OnBrake;
+                @Brake.canceled += instance.OnBrake;
             }
 
             private void UnregisterCallbacks(ITankControlActions instance)
@@ -280,12 +280,12 @@ namespace Game.Code.Input
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
-                @Shoot.started -= instance.OnShoot;
-                @Shoot.performed -= instance.OnShoot;
-                @Shoot.canceled -= instance.OnShoot;
                 @Rotate.started -= instance.OnRotate;
                 @Rotate.performed -= instance.OnRotate;
                 @Rotate.canceled -= instance.OnRotate;
+                @Brake.started -= instance.OnBrake;
+                @Brake.performed -= instance.OnBrake;
+                @Brake.canceled -= instance.OnBrake;
             }
 
             public void RemoveCallbacks(ITankControlActions instance)
@@ -315,8 +315,8 @@ namespace Game.Code.Input
         public interface ITankControlActions
         {
             void OnMove(InputAction.CallbackContext context);
-            void OnShoot(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
+            void OnBrake(InputAction.CallbackContext context);
         }
     }
 }

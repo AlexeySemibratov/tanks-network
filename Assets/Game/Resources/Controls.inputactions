@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Shoot",
-                    "type": "Button",
-                    "id": "cae15fa1-781d-4586-b3d5-2b7699051d0d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Rotate",
                     "type": "Value",
                     "id": "ffe78599-d3b7-4fac-b138-51ad39872d65",
@@ -31,20 +22,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Brake",
+                    "type": "Button",
+                    "id": "a73c6e1c-246f-46c9-8225-b57392909f28",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "de17bdba-8e94-4d86-9036-eae230441859",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "1D Axis",
                     "id": "f4028c76-4ebe-47cf-ab75-eb8f76771192",
@@ -143,6 +132,17 @@
                     "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "9531c1a9-a76b-4b32-8094-bc0243c60f06",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
