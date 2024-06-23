@@ -11,10 +11,9 @@ namespace Game.Code.Tanks
 
 		public int Id => _id;
 
-		public TankMovementModel MovementModel => _movementModel;
+		[Inject] public TankMovementModel MovementModel { get; private set; }
 
 		[Inject] private TankInputModel _inputModel;
-		[Inject] public TankMovementModel _movementModel;
 
 		#region Initialization
 
