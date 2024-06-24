@@ -55,6 +55,15 @@ namespace Game.Code.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""8e935b8a-dfcc-4c63-bd64-a738d9246a31"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -167,6 +176,17 @@ namespace Game.Code.Input
                     ""action"": ""Brake"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56cf8acb-5415-4722-a05a-782050a9be29"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -184,6 +204,7 @@ namespace Game.Code.Input
             m_TankControl_Move = m_TankControl.FindAction("Move", throwIfNotFound: true);
             m_TankControl_Rotate = m_TankControl.FindAction("Rotate", throwIfNotFound: true);
             m_TankControl_Brake = m_TankControl.FindAction("Brake", throwIfNotFound: true);
+            m_TankControl_Reset = m_TankControl.FindAction("Reset", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -248,6 +269,7 @@ namespace Game.Code.Input
         private readonly InputAction m_TankControl_Move;
         private readonly InputAction m_TankControl_Rotate;
         private readonly InputAction m_TankControl_Brake;
+        private readonly InputAction m_TankControl_Reset;
         public struct TankControlActions
         {
             private @Controls m_Wrapper;
@@ -255,6 +277,7 @@ namespace Game.Code.Input
             public InputAction @Move => m_Wrapper.m_TankControl_Move;
             public InputAction @Rotate => m_Wrapper.m_TankControl_Rotate;
             public InputAction @Brake => m_Wrapper.m_TankControl_Brake;
+            public InputAction @Reset => m_Wrapper.m_TankControl_Reset;
             public InputActionMap Get() { return m_Wrapper.m_TankControl; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -273,6 +296,9 @@ namespace Game.Code.Input
                 @Brake.started += instance.OnBrake;
                 @Brake.performed += instance.OnBrake;
                 @Brake.canceled += instance.OnBrake;
+                @Reset.started += instance.OnReset;
+                @Reset.performed += instance.OnReset;
+                @Reset.canceled += instance.OnReset;
             }
 
             private void UnregisterCallbacks(ITankControlActions instance)
@@ -286,6 +312,9 @@ namespace Game.Code.Input
                 @Brake.started -= instance.OnBrake;
                 @Brake.performed -= instance.OnBrake;
                 @Brake.canceled -= instance.OnBrake;
+                @Reset.started -= instance.OnReset;
+                @Reset.performed -= instance.OnReset;
+                @Reset.canceled -= instance.OnReset;
             }
 
             public void RemoveCallbacks(ITankControlActions instance)
@@ -317,6 +346,7 @@ namespace Game.Code.Input
             void OnMove(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
             void OnBrake(InputAction.CallbackContext context);
+            void OnReset(InputAction.CallbackContext context);
         }
     }
 }

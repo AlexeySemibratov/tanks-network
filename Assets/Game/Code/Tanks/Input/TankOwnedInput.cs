@@ -29,6 +29,11 @@ namespace Game.Code.Tanks.Input
 				.PerformedAsButton()
 				.Subscribe(pressed => _netTankUnit.CmdSetBrakeInput(pressed))
 				.AddTo(_disposables);
+			
+			actions.Reset
+				.PerformedAsObservable()
+				.Subscribe(_ => _netTankUnit.CmdReset())
+				.AddTo(_disposables);
 		}
 
 		private void HandleInputAxis(InputAction action, bool isMoveAxis)

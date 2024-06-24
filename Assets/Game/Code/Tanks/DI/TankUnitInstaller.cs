@@ -71,6 +71,10 @@ namespace Game.Code.Tanks.DI
 			Container
 				.BindInterfacesTo<TankMovementController>()
 				.AsSingle();
+			
+			Container
+				.Bind<TankResetController>()
+				.AsSingle();
 		}
 
 		private void InstallOwned()

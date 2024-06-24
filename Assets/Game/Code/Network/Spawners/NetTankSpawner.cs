@@ -32,7 +32,7 @@ namespace Game.Code.Network.Spawners
 		#region Server
 
 
-		public NetTankUnit ServerSpawn(NetworkConnectionToClient conn)
+		public NetTankUnit ServerSpawn(NetworkConnectionToClient conn, Transform point)
 		{
 			int id = conn.connectionId;
 			bool isOwned = conn is LocalConnectionToClient;
@@ -42,8 +42,8 @@ namespace Game.Code.Network.Spawners
 				ServerId = id,
 				IsOwned = isOwned,
 				
-				Position = Vector3.up * 2,
-				Rotation = Quaternion.identity
+				Position = point.position,
+				Rotation = point.rotation
 			};
 			
 			NetTankUnit tank = _tankFactory.Create(args);

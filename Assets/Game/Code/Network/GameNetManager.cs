@@ -1,12 +1,15 @@
 ﻿using Game.Code.Network.Spawners;
 using Game.Code.Tanks;
 using Mirror;
+using UnityEngine;
 using Zenject;
 
 namespace Game.Code.Network
 {
 	public class GameNetManager : NetworkManager
 	{
+		[SerializeField] private Transform _spawnPoint;
+		
 		[Inject] private INetTankSpawner _netTankSpawner;
 		[Inject] private INetModeProvider _netModeProvider;
 		
@@ -30,7 +33,7 @@ namespace Game.Code.Network
 
 		public override void OnServerConnect(NetworkConnectionToClient conn)
 		{
-			NetTankUnit tank = _netTankSpawner.ServerSpawn(conn);
+			NetTankUnit tank = _netTankSpawner.ServerSpawn(conn, _spawnPoint);
 			
 			NetworkServer.AddPlayerForConnection(conn, tank.gameObject);
 		}

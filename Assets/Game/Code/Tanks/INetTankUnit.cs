@@ -16,5 +16,6 @@ namespace Game.Code.Tanks
 		void CmdSetBrakeInput(bool pressed);
 		void CmdMoveAxisInput(float value);
 		void CmdRotateAxisInput(float value);
+		void CmdReset();
 	}
 }

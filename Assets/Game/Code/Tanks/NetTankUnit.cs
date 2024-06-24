@@ -1,5 +1,7 @@
 ﻿using Game.Code.Tanks.Models;
+using Game.Code.Tanks.Movement;
 using Mirror;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +16,9 @@ namespace Game.Code.Tanks
 		[Inject] public TankMovementModel MovementModel { get; private set; }
 
 		[Inject] private TankInputModel _inputModel;
+		
+		// Server only
+		[InjectOptional] private TankResetController _resetController;
 
 		#region Initialization
 
@@ -77,7 +82,13 @@ namespace Game.Code.Tanks
 		{
 			_inputModel.RotateInputValue = value;
 		}
-		
+
+		[Command]
+		public void CmdReset()
+		{
+			_resetController.Reset();
+		}
+
 		#endregion
 	}
 }
