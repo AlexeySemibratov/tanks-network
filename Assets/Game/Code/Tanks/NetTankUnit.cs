@@ -1,7 +1,7 @@
 ﻿using Game.Code.Tanks.Models;
 using Game.Code.Tanks.Movement;
+using Game.Code.Extensions;
 using Mirror;
-using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -44,37 +44,37 @@ namespace Game.Code.Tanks
 
 		public void ServerSetVelocity(Vector3 velocity)
 		{
-			MovementModel.Velocity.Value = velocity;
-			MovementModel.VelocityMagnitude.Value = velocity.magnitude;
+			OnVelocityChanged(default, velocity);
 			_velocity = velocity;
 		}
 
 		public void ServerSetAngularVelocity(Vector3 velocity)
 		{
-			MovementModel.AngularVelocity.Value = velocity;
+			OnAngularVelocityChanged(default, velocity);
 			_angularVelocity = velocity;
 		}
 
 		public void ServerSetMoveDirection(EMoveDirection dir)
 		{
-			MovementModel.MoveDirection = dir;
+			OnMoveDirChanged(default, dir);
 			_moveDirection = dir;
 		}
 
 		private void OnVelocityChanged(Vector3 _, Vector3 value)
 		{
-			MovementModel.Velocity.Value = value;
-			MovementModel.VelocityMagnitude.Value = value.magnitude;
+			MovementModel?.Velocity.Set(value);
+			MovementModel?.VelocityMagnitude.Set(value.magnitude);
 		}
 		
 		private void OnAngularVelocityChanged(Vector3 _, Vector3 value)
 		{
-			MovementModel.AngularVelocity.Value = value;
+			MovementModel?.AngularVelocity.Set(value);
 		}
 
 		private void OnMoveDirChanged(EMoveDirection _, EMoveDirection value)
 		{
-			MovementModel.MoveDirection = value;
+			if (MovementModel != null)
+				MovementModel.MoveDirection = value;
 		}
 
 		#region Commands

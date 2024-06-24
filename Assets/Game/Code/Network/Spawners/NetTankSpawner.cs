@@ -77,7 +77,9 @@ namespace Game.Code.Network.Spawners
 				IsOwned = msg.isLocalPlayer,
 				
 				Position = msg.position,
-				Rotation = msg.rotation
+				Rotation = msg.rotation,
+				
+				ClientSpawnMessage = msg
 			};
 			
 			NetTankUnit tank = _tankFactory.Create(args);

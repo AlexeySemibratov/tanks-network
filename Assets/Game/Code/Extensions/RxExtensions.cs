@@ -25,5 +25,10 @@ namespace Game.Code.Extensions
 				PerformedAsObservable(action).Select(_ => true),
 				CancelledAsObservable(action).Select(_ => false)
 			);
+
+		public static void Set<T>(this IReactiveProperty<T> source, T value) => source.Value = value;
+		public static void Set(this FloatReactiveProperty source, float value) => source.Value = value;
+		public static void Set(this IntReactiveProperty source, int value) => source.Value = value;
+		public static void Set(this BoolReactiveProperty source, bool value) => source.Value = value;
 	}
 }
