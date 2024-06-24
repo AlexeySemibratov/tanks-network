@@ -36,6 +36,9 @@ namespace Game.Code.Tanks
 		[SyncVar(hook = nameof(OnVelocityChanged))] 
 		private Vector3 _velocity;
 		
+		[SyncVar(hook = nameof(OnAngularVelocityChanged))] 
+		private Vector3 _angularVelocity;
+		
 		[SyncVar(hook = nameof(OnMoveDirChanged))] 
 		private EMoveDirection _moveDirection;
 
@@ -44,6 +47,12 @@ namespace Game.Code.Tanks
 			MovementModel.Velocity.Value = velocity;
 			MovementModel.VelocityMagnitude.Value = velocity.magnitude;
 			_velocity = velocity;
+		}
+
+		public void ServerSetAngularVelocity(Vector3 velocity)
+		{
+			MovementModel.AngularVelocity.Value = velocity;
+			_angularVelocity = velocity;
 		}
 
 		public void ServerSetMoveDirection(EMoveDirection dir)
@@ -56,6 +65,11 @@ namespace Game.Code.Tanks
 		{
 			MovementModel.Velocity.Value = value;
 			MovementModel.VelocityMagnitude.Value = value.magnitude;
+		}
+		
+		private void OnAngularVelocityChanged(Vector3 _, Vector3 value)
+		{
+			MovementModel.AngularVelocity.Value = value;
 		}
 
 		private void OnMoveDirChanged(EMoveDirection _, EMoveDirection value)

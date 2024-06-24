@@ -7,10 +7,11 @@ namespace Game.Code.Data.Configs
 	{
 		[Header("Engine")]
 		public float EngineGasTorque;
-		public float EngineRotationTorque;
+		public float EngineRelativeTorqueAcceleration;
 		public float EngineBreakTorque;
 		
 		public float MaxForwardSpeed;
 		public float MaxBackwardSpeed;
+		public float MaxAngularSpeed;
 	}
 }

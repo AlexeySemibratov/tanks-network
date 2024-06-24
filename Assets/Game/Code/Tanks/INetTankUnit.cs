@@ -11,6 +11,7 @@ namespace Game.Code.Tanks
 
 		void ServerInit(int id);
 		void ServerSetVelocity(Vector3 velocity);
+		void ServerSetAngularVelocity(Vector3 velocity);
 		void ServerSetMoveDirection(EMoveDirection dir);
 		
 		void CmdSetBrakeInput(bool pressed);

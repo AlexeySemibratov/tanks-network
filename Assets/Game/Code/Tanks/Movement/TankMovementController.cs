@@ -25,8 +25,10 @@ namespace Game.Code.Tanks.Movement
 		private void UpdateModel()
 		{
 			var velocity = _rigidbody.velocity;
+			var angularVelocity = _rigidbody.angularVelocity;
 			
 			_netTankUnit.ServerSetVelocity(velocity);
+			_netTankUnit.ServerSetAngularVelocity(angularVelocity);
 
 			if (IsMovingBackward(velocity))
 				_netTankUnit.ServerSetMoveDirection(EMoveDirection.Backward);
@@ -88,12 +90,23 @@ namespace Game.Code.Tanks.Movement
 
 		private void Rotate()
 		{
-			if(_tankView.MiddleWheelL.IsGrounded || _tankView.MiddleWheelR.IsGrounded)
-			{
-				Vector3 torque = Vector3.up * _inputModel.RotateInputValue * _tankConfig.EngineRotationTorque;
+			if (!IsRotationAllowed()) 
+				return;
+			
+			Vector3 torque = Vector3.up * _inputModel.RotateInputValue * _tankConfig.EngineRelativeTorqueAcceleration;
 				
-				_rigidbody.AddRelativeTorque(torque);
-			}
+			_rigidbody.AddRelativeTorque(torque, ForceMode.Acceleration);
+		}
+
+		private bool IsRotationAllowed()
+		{
+			var angularVelocityY = Mathf.Abs(_movementModel.AngularVelocity.Value.y);
+			
+			Debug.Log($"Angular v {angularVelocityY}");
+			
+			return _tankView.MiddleWheelL.IsGrounded &&
+			       _tankView.MiddleWheelR.IsGrounded &&
+			       angularVelocityY <= _tankConfig.MaxAngularSpeed;
 		}
 	}
 }
