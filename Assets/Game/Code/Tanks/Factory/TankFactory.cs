@@ -58,20 +58,5 @@ namespace Game.Code.Tanks.Factory
 
 			goContext.Construct(_diContainer);
 		}
-
-		// NetTankUnit Construct( GameObjectContext goContext, int id, bool isOwned = false )
-		// {
-		// 	goContext.name			= $"{player.name} [id={id}]";
-		//
-		// 	_diContainer.BindInstance( isOwned );
-		// 	
-		// 	goContext.Construct( _diContainer );
-		//
-		// 	NetTankUnit resolvedInstance = goContext.Container.Resolve< NetTankUnit >();
-		// 	
-		// 	_diContainer.Unbind<bool>();
-		//
-		// 	return playerInstance;
-		// }
 	}
 }
