@@ -102,8 +102,6 @@ namespace Game.Code.Tanks.Movement
 		{
 			var angularVelocityY = Mathf.Abs(_movementModel.AngularVelocity.Value.y);
 			
-			Debug.Log($"Angular v {angularVelocityY}");
-			
 			return _tankView.MiddleWheelL.IsGrounded &&
 			       _tankView.MiddleWheelR.IsGrounded &&
 			       angularVelocityY <= _tankConfig.MaxAngularSpeed;

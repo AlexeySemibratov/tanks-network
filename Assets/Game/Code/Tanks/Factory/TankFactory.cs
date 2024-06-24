@@ -42,7 +42,7 @@ namespace Game.Code.Tanks.Factory
 			if (_netModeProvider.NetMode.IsServer())
 				tank.ServerInit(args.ServerId);
 			else
-				NetworkClient.ApplySpawnPayload( tank.netIdentity, args.ClientSpawnMessage );
+				NetworkClient.ApplySpawnPayload(tank.netIdentity, args.ClientSpawnMessage);
 			
 			InitZenject(tank, args);
 
